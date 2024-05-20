@@ -5,7 +5,7 @@
   "main": "sever.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx nodemon --exec babel-node src/sever.js"
+    "start": "nodemon --exec babel-node src/server.js"
   },
   "keywords": [
     "chatbot",
@@ -19,12 +19,12 @@
     "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
-    "request": "^2.88.2",
-    "nodemon": "^2.0.15"
+    "request": "^2.88.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/node": "^7.12.10",
-    "@babel/preset-env": "^7.12.11"
+    "@babel/core": "^7.11.6",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.24.4",
+    "nodemon": "^2.0.4"
   }
 }
