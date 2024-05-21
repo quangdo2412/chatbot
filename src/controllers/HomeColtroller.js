@@ -1,6 +1,7 @@
 require("dotenv").config();
 import request from "request";
 
+
 let getHomePage = (req, res) => {
   return res.render("homepage.ejs");
 };
@@ -117,7 +118,7 @@ function handlePostback(sender_psid, received_postback) {
 
   // Set the response based on the postback payload
   if (payload === "yes") {
-    response = { text: "Thanks!" };
+    response = { text: "Thanks you!" };
   } else if (payload === "no") {
     response = { text: "Oops, try sending another image." };
   }
