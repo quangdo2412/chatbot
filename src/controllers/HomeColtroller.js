@@ -168,7 +168,7 @@ let setupProfile = async (req, res) => {
     }, (err, res, body) => {
       console.log(body)
       if (!err) {
-        console.log('Setup user profile success')
+        console.log('Setup user profile success123')
       } else {
         console.error("Unable to set up profile:" + err);
       }
