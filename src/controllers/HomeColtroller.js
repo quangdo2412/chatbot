@@ -154,24 +154,24 @@ function callSendAPI(sender_psid, response) {
 
 let setupProfile = (req, res) => {
   // Construct the message body
-  let request_body = {
-   "get_started" : "GET_STARTED",
-   "whitelisted_domains" : "https://vmu-retaurent.onrender.com/"
-  }
-
-  // Send the HTTP request to the Messenger Platform
-  request({
-    "uri": `https://graph.facebook.com/v20.0/me/messenger_profile?access_token=$(PAGE_ACCESS_TOKEN)`,
-    "qs": { "access_token": PAGE_ACCESS_TOKEN },
-    "method": "POST",
-    "json": request_body
-  }, (err, res, body) => {
-    if (!err) {
-      console.log('Setup user profile success')
-    } else {
-      console.error("Unable to set up profile:" + err);
+    let request_body = {
+    "get_started" : "GET_STARTED",
+    "whitelisted_domains" : "https://vmu-retaurent.onrender.com/"
     }
-  }); 
+
+    // Send the HTTP request to the Messenger Platform
+    request({
+      "uri": `https://graph.facebook.com/v20.0/me/messenger_profile?access_token=$(PAGE_ACCESS_TOKEN)`,
+      "qs": { "access_token": PAGE_ACCESS_TOKEN },
+      "method": "POST",
+      "json": request_body
+    }, (err, res, body) => {
+      if (!err) {
+        console.log('Setup user profile success!!')
+      } else {
+        console.error("Unable to set up profile:" + err);
+      }
+    }); 
 };
 
 module.exports = {
