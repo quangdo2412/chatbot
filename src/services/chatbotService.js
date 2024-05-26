@@ -26,7 +26,7 @@ let callSendAPI = (sender_psid,response) => {
     }); 
 }
 
-let handleGetStarted = () => {
+let handleGetStarted = (sender_psid) => {
     return new Promise(async (resolve, reject) => {
         try{
             let response = {"text" : "xin chao Quang den voi nha hang"}
