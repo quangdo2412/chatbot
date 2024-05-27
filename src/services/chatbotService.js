@@ -5,7 +5,8 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 const IMAGE_GET_STARTED = 'http://bit.ly/eric-bot1';
 const IMAGE_MENU1 = 'https://afamilycdn.com/fRhOWcbaG01Vd2ydvKbOwEYcba/Image/2015/11/bua-an-33-trieu-dong-khach-binh-than-rut-vi_20151116081951526.jpg';
-
+const IMAGE_MENU2 = 'https://www.google.com/url?sa=i&url=https%3A%2F%2Frobata-an.com%2Fvi%2Fthong-bao-hoat-dong-tro-lai%2F&psig=AOvVaw1qv1H6K9TBy2UkfkG6wRUE&ust=1716919918894000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCPjzq6i3roYDFQAAAAAdAAAAABAE';
+const IMAGE_MENU3 = 'https://khonggianxanh.com/wp-content/uploads/2021/03/thiet-ke-noi-that-nha-hang-5-sao.jpg';
 let callSendAPI = (sender_psid,response) => {
 // Construct the message body
     let request_body = {
@@ -141,7 +142,7 @@ let getMainMenuTemplate = () => {
           {
             title: "GIO MO CUA",
             subtitle: "TU THU 2 DEN THU 7 - NGHI CN 10AM-11PM",
-            image_url: IMAGE_GET_STARTED ,
+            image_url: IMAGE_MENU2 ,
             buttons: [
               {
                 type: "postback",
@@ -153,7 +154,7 @@ let getMainMenuTemplate = () => {
           {
             title: "KHONG GIAN NHA HANG",
             subtitle: "NHA HANG CO SUC CHUA LEN TOI 400 NGUOI",
-            image_url: IMAGE_GET_STARTED ,
+            image_url: IMAGE_MENU3 ,
             buttons: [
               {
                 type: "postback",
