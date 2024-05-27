@@ -53,11 +53,11 @@ let handleGetStarted = (sender_psid) => {
         try{
             let username = await getUserName(sender_psid);
             let response1 = {"text" : `xin chao ${username} den voi nha hang`}
-            let reponse2 = sendGetStartedTemplate();
+            let response2 = sendGetStartedTemplate();
             //send text message
-            await callSendAPI(sender_psid,response);
+            await callSendAPI(sender_psid,response1);
             //send generic template message
-            await callSendAPI(sender_psid,response);
+            await callSendAPI(sender_psid,response2);
             resolve('done')
         }catch(e){
             reject(e);
