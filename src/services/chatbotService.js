@@ -5,8 +5,8 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 const IMAGE_GET_STARTED = 'http://bit.ly/eric-bot1';
 const IMAGE_MENU1 = 'https://afamilycdn.com/fRhOWcbaG01Vd2ydvKbOwEYcba/Image/2015/11/bua-an-33-trieu-dong-khach-binh-than-rut-vi_20151116081951526.jpg';
-const IMAGE_MENU2 = 'https://www.google.com/url?sa=i&url=https%3A%2F%2Frobata-an.com%2Fvi%2Fthong-bao-hoat-dong-tro-lai%2F&psig=AOvVaw1qv1H6K9TBy2UkfkG6wRUE&ust=1716919918894000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCPjzq6i3roYDFQAAAAAdAAAAABAE';
-const IMAGE_MENU3 = 'https://khonggianxanh.com/wp-content/uploads/2021/03/thiet-ke-noi-that-nha-hang-5-sao.jpg';
+const IMAGE_MENU2 = 'https://www.pos365.vn/storage/app/media/2020/2/xem_gio_mo_cua_hang/xemgiomocuahang-4.png';
+const IMAGE_MENU3 = 'https://tknt.vn/images/2021/04/02/thiet-ke-nha-hang-1-tang-01.jpg';
 let callSendAPI = (sender_psid,response) => {
 // Construct the message body
     let request_body = {
