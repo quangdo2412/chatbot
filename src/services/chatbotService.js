@@ -53,7 +53,7 @@ let handleGetStarted = (sender_psid) => {
         try{
             let username = await getUserName(sender_psid);
             let response1 = {"text" : `xin chao ${username} den voi nha hang`}
-            let response2 = sendGetStartedTemplate();
+            let response2 = getStartedTemplate();
             //send text message
             await callSendAPI(sender_psid,response1);
             //send generic template message
@@ -65,7 +65,7 @@ let handleGetStarted = (sender_psid) => {
     })
 }
 
-let sendGetStartedTemplate = () => {
+let getStartedTemplate = () => {
     let response = {
         attachment: {
           type: "template",
@@ -101,6 +101,77 @@ let sendGetStartedTemplate = () => {
     return response;
 }
 
+let handleSendMainMenu = (sender_psid) => {
+  return new Promise(async (resolve, reject) => {
+    try{
+        let response1 = getMainMenuTemplate();
+        await callSendAPI(sender_psid,response1);
+        resolve('done')
+    }catch(e){
+        reject(e);
+    }
+})
+}
+
+let getMainMenuTemplate = () => {
+  let response = {
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "generic",
+        elements: [
+          {
+            title: "menu cua nha hang",
+            subtitle: "chung toi han hanh mang den cho ban bua trua va bua toi",
+            image_url: IMAGE_GET_STARTED ,
+            buttons: [
+              {
+                type: "postback",
+                title: "BUA TRUA",
+                payload: "LUNCH_MENU",
+              },
+              {
+                type: "postback",
+                title: "BUA TOI",
+                payload: "DINNER_MENU",
+              },
+            ],
+          },
+          {
+            title: "GIO MO CUA",
+            subtitle: "TU THU 2 DEN THU 7 - NGHI CN 10AM-11PM",
+            image_url: IMAGE_GET_STARTED ,
+            buttons: [
+              {
+                type: "postback",
+                title: "DAT BAN",
+                payload: "RESERVE_TABLE",
+              },
+            ],
+          },
+          {
+            title: "KHONG GIAN NHA HANG",
+            subtitle: "NHA HANG CO SUC CHUA LEN TOI 400 NGUOI",
+            image_url: IMAGE_GET_STARTED ,
+            buttons: [
+              {
+                type: "postback",
+                title: "CHI TIET KHONG GIAN NHA HANG",
+                payload: "SHOW_ROOM,",
+              },
+             
+            ],
+          }
+          
+          ,
+        ],
+      },
+    },
+}
+return response;
+}
+
 module.exports = {
-    handleGetStarted : handleGetStarted
+    handleGetStarted : handleGetStarted,
+    handleSendMainMenu : handleSendMainMenu,
 }
