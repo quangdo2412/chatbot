@@ -73,8 +73,8 @@ let sendGetStartedTemplate = () => {
             template_type: "generic",
             elements: [
               {
-                title: "Xin caho ban den voi nha hang cua quang",
-                subtitle: "Duoi day la cac lua chon",
+                title: "Xin chao ban den voi nha hang cua quang",
+                subtitle: "Duoi day la cac lua chon cua nha hang",
                 image_url: IMAGE_GET_STARTED ,
                 buttons: [
                   {

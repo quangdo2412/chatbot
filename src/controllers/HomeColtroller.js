@@ -126,8 +126,11 @@ async function handlePostback(sender_psid, received_postback) {
     case 'no':
       response = { text: "Oops, try sending another image." };
       break;
+    case 'RESTART_BOT':
     case 'GET_STARTED':
       await chatbotService.handleGetStarted(sender_psid);
+      break;
+
     default:
       response = {"text" : `opp! i dont know reponse with postback ${payload}`}
   }
@@ -184,9 +187,57 @@ let setupProfile = async (req, res) => {
     return res.send("Setup user profile success!!");
 };
 
+
+
+let setupPersistentMenu = async (req,res) => {
+  let request_body = {
+    "persistent_menu": [
+      {
+          "locale": "default",
+          "composer_input_disabled": false,
+          "call_to_actions": [
+              {
+                  "type": "web_url",
+                  "title": "Youtube chanel",
+                  "url": "https://www.youtube.com/@BeatHouse.102",
+                  "webview_height_ratio": "full"
+              },
+              {
+                  "type": "web_url",
+                  "title": "Facebook page",
+                  "url": "https://www.facebook.com/",
+                  "webview_height_ratio": "full"
+              },
+              {
+                  "type": "postback",
+                  "title": "Khoi dong lai bot",
+                  "payload": "RESTART_BOT"
+              }
+          ]
+      }
+  ]
+    }
+    // Send the HTTP request to the Messenger Platform
+    await request({
+      "uri": `https://graph.facebook.com/v20.0/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`,
+      "qs": { "access_token": PAGE_ACCESS_TOKEN },
+      "method": "POST",
+      "json": request_body
+    }, (err, res, body) => {
+      console.log(body)
+      if (!err) {
+        console.log('Setup persistent menu success')
+      } else {
+        console.error("Unable to set up profile:" + err);
+      }
+    }); 
+    return res.send("Setup persistent menu success");
+}
+
 module.exports = {
   getHomePage: getHomePage,
   postWebhook: postWebhook,
   getWebhook: getWebhook,
   setupProfile: setupProfile,
+  setupPersistentMenu: setupPersistentMenu,
 };
