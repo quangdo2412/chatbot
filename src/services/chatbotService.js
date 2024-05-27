@@ -3,6 +3,8 @@ import request from "request";
 require("dotenv").config();
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
+const IMAGE_GET_STARTED = 'http://bit.ly/eric-bot1';
+
 let callSendAPI = (sender_psid,response) => {
 // Construct the message body
     let request_body = {
@@ -50,13 +52,53 @@ let handleGetStarted = (sender_psid) => {
     return new Promise(async (resolve, reject) => {
         try{
             let username = await getUserName(sender_psid);
-            let response = {"text" : `xin chao ${username} den voi nha hang`}
+            let response1 = {"text" : `xin chao ${username} den voi nha hang`}
+            let reponse2 = sendGetStartedTemplate();
+            //send text message
+            await callSendAPI(sender_psid,response);
+            //send generic template message
             await callSendAPI(sender_psid,response);
             resolve('done')
         }catch(e){
             reject(e);
         }
     })
+}
+
+let sendGetStartedTemplate = () => {
+    let response = {
+        attachment: {
+          type: "template",
+          payload: {
+            template_type: "generic",
+            elements: [
+              {
+                title: "Xin caho ban den voi nha hang cua quang",
+                subtitle: "Duoi day la cac lua chon",
+                image_url: IMAGE_GET_STARTED ,
+                buttons: [
+                  {
+                    type: "postback",
+                    title: "MENU CHINH",
+                    payload: "MAIN_MENU",
+                  },
+                  {
+                    type: "postback",
+                    title: "DAT BAN",
+                    payload: "RESERVE_TABLE",
+                  },
+                  {
+                    type: "postback",
+                    title: "HUONG DAN SU DUNG BOT",
+                    payload: "GUITE_TO_USE",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+    }
+    return response;
 }
 
 module.exports = {
