@@ -4,6 +4,7 @@ require("dotenv").config();
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 const IMAGE_GET_STARTED = 'http://bit.ly/eric-bot1';
+const IMAGE_MENU1 = 'https://afamilycdn.com/fRhOWcbaG01Vd2ydvKbOwEYcba/Image/2015/11/bua-an-33-trieu-dong-khach-binh-than-rut-vi_20151116081951526.jpg';
 
 let callSendAPI = (sender_psid,response) => {
 // Construct the message body
@@ -123,7 +124,7 @@ let getMainMenuTemplate = () => {
           {
             title: "menu cua nha hang",
             subtitle: "chung toi han hanh mang den cho ban bua trua va bua toi",
-            image_url: IMAGE_GET_STARTED ,
+            image_url: IMAGE_MENU1 ,
             buttons: [
               {
                 type: "postback",
