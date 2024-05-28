@@ -7,6 +7,14 @@ const IMAGE_GET_STARTED = 'http://bit.ly/eric-bot1';
 const IMAGE_MENU1 = 'https://afamilycdn.com/fRhOWcbaG01Vd2ydvKbOwEYcba/Image/2015/11/bua-an-33-trieu-dong-khach-binh-than-rut-vi_20151116081951526.jpg';
 const IMAGE_MENU2 = 'https://www.pos365.vn/storage/app/media/2020/2/xem_gio_mo_cua_hang/xemgiomocuahang-4.png';
 const IMAGE_MENU3 = 'https://tknt.vn/images/2021/04/02/thiet-ke-nha-hang-1-tang-01.jpg';
+
+const IMAGE_APPETIZERS='https://doanhnhanplus.vn/wp-content/uploads/2020/02/YummyBestDesserts-Main.jpg';
+const IMAGE_FISH='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXsAO4iIHw4sxF0-q8nO2sq61ybTc4LqnBxX5WO9345w&s';
+const IMAGE_SALAD='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSChqOEg1gi7lDVY_PfFCE3-5D5n8bD00ytdRPOPkqQWA&s';
+
+const IMAGE_BACK_MAIN_MENU = 'http://bit.ly/eric-bot8'
+
+
 let callSendAPI = (sender_psid,response) => {
 // Construct the message body
     let request_body = {
@@ -195,7 +203,7 @@ let getLunchMenuTemplate = () => {
           {
             title: "Mon trang mieng",
             subtitle: "Nha hang co nhieu mon trang mieng hap dan",
-            image_url: IMAGE_MENU1 ,
+            image_url: IMAGE_APPETIZERS ,
             buttons: [
               {
                 type: "postback",
@@ -205,9 +213,9 @@ let getLunchMenuTemplate = () => {
             ],
           },
           {
-            title: "CA RAN",
+            title: "MON CA",
             subtitle: "MON CA AN RAT NGON",
-            image_url: IMAGE_MENU2 ,
+            image_url: IMAGE_FISH ,
             buttons: [
               {
                 type: "postback",
@@ -219,12 +227,25 @@ let getLunchMenuTemplate = () => {
           {
             title: "MON SALAD",
             subtitle: "NHA HANG CO SALAD RAT NGON DAM BAO CHAT LUONG",
-            image_url: IMAGE_MENU3 ,
+            image_url: IMAGE_SALAD ,
             buttons: [
               {
                 type: "postback",
                 title: "XEM CHI TIET",
                 payload: "VIEW_SALAD",
+              },
+             
+            ],
+          },
+          {
+            title: "QUAY TRO LAI ",
+            subtitle: "QUAY LAI MENU CHINH",
+            image_url: IMAGE_BACK_MAIN_MENU ,
+            buttons: [
+              {
+                type: "postback",
+                title: "BACK",
+                payload: "BACK_TO_MAIN_MENU",
               },
              
             ],
