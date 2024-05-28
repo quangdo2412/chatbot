@@ -387,13 +387,12 @@ let getViewAppetizersTemplate = () => {
             buttons: [
               {
                 type: "postback",
-                title: "QUAY TRO LAI MAIN MENU",
-                payload: "BACK_TO_MAIN_MENU,",
+                title: "BACK",
+                payload: "BACK_TO_MAIN_MENU",
               },
              
             ],
           }
-          
           ,
         ],
       },
@@ -443,8 +442,8 @@ let getViewFishTemplate = () => {
             buttons: [
               {
                 type: "postback",
-                title: "QUAY TRO LAI MAIN MENU",
-                payload: "BACK_TO_MAIN_MENU,",
+                title: "BACK",
+                payload: "BACK_TO_MAIN_MENU",
               },
              
             ],
@@ -499,13 +498,12 @@ let getViewSaLadTemplate = () => {
             buttons: [
               {
                 type: "postback",
-                title: "QUAY TRO LAI MAIN MENU",
-                payload: "BACK_TO_MAIN_MENU,",
+                title: "BACK",
+                payload: "BACK_TO_MAIN_MENU",
               },
              
             ],
           }
-          
           ,
         ],
       },
