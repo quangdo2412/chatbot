@@ -146,6 +146,7 @@ async function handlePostback(sender_psid, received_postback) {
     case 'VIEW_SALAD':
     
     case 'BACK_TO_MAIN_MENU':
+      await chatbotService.handleBackToMainMenu(sender_psid);
     default:
       response = {"text" : `opp! i dont know reponse with postback ${payload}`}
   }

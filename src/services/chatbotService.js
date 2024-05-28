@@ -12,7 +12,7 @@ const IMAGE_APPETIZERS='https://doanhnhanplus.vn/wp-content/uploads/2020/02/Yumm
 const IMAGE_FISH='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXsAO4iIHw4sxF0-q8nO2sq61ybTc4LqnBxX5WO9345w&s';
 const IMAGE_SALAD='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSChqOEg1gi7lDVY_PfFCE3-5D5n8bD00ytdRPOPkqQWA&s';
 
-const IMAGE_BACK_MAIN_MENU = 'http://bit.ly/eric-bot8'
+const IMAGE_BACK_MAIN_MENU = 'https://i.pinimg.com/736x/44/c9/94/44c9947e11ff63b178641296a8d09556.jpg'
 
 
 let callSendAPI = (sender_psid,response) => {
@@ -259,6 +259,8 @@ let getLunchMenuTemplate = () => {
 return response;
 }
 
+
+
 let handleSendDinnerMenu = (sender_psid) => {
   return new Promise(async (resolve, reject) => {
     try{
@@ -329,9 +331,14 @@ let getDinnerMenuTemplate = () => {
 return response;
 }
 
+let handleBackToMainMenu = async (sender_psid) => {
+  await handleSendMainMenu(sender_psid);
+}
+
 module.exports = {
     handleGetStarted : handleGetStarted,
     handleSendMainMenu : handleSendMainMenu,
     handleSendLunchMenu : handleSendLunchMenu,
     handleSendDinnerMenu : handleSendDinnerMenu,
+    handleBackToMainMenu: handleBackToMainMenu,
 }
