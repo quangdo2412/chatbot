@@ -26,7 +26,7 @@ const IMAGE_VIEW_SALAD1='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ
 const IMAGE_VIEW_SALAD2='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAKOUblL-E8YJHTsJFlaZY_M1k2RcN9ReXiS41C88wOQ&s';
 const IMAGE_VIEW_SALAD3='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5ov_26z8hUkIa8zKZfyGYigjeh9eoexAA41YfRE6EZA&s';
 
-let callSendAPI = (sender_psid,response) => {
+let callSendAPI = async (sender_psid,response) => {
 // Construct the message body
     let request_body = {
         "recipient": {
@@ -34,6 +34,10 @@ let callSendAPI = (sender_psid,response) => {
         },
         "message": response
     }
+
+    await markMarkRead(sender_psid);
+    await sendTypingOn(sender_psid);
+  
 
     // Send the HTTP request to the Messenger Platform
     request({
@@ -49,6 +53,54 @@ let callSendAPI = (sender_psid,response) => {
         }
     }); 
 }
+
+let sendTypingOn = (sender_psid) => {
+  // Construct the message body
+      let request_body = {
+          "recipient": {
+          "id": sender_psid
+          },
+          "sender_action": "typing_on"
+      }
+  
+      // Send the HTTP request to the Messenger Platform
+      request({
+          "uri": "https://graph.facebook.com/v2.6/me/messages",
+          "qs": { "access_token": PAGE_ACCESS_TOKEN },
+          "method": "POST",
+          "json": request_body
+      }, (err, res, body) => {
+          if (!err) {
+          console.log('sendTypingOn sent!')
+          } else {
+          console.error("Unable to send sendTypingOn:" + err);
+          }
+      }); 
+  }
+
+  let markMarkRead = (sender_psid) => {
+    // Construct the message body
+        let request_body = {
+            "recipient": {
+            "id": sender_psid
+            },
+            "sender_action": "mark_seen"
+        }
+    
+        // Send the HTTP request to the Messenger Platform
+        request({
+            "uri": "https://graph.facebook.com/v2.6/me/messages",
+            "qs": { "access_token": PAGE_ACCESS_TOKEN },
+            "method": "POST",
+            "json": request_body
+        }, (err, res, body) => {
+            if (!err) {
+            console.log('markMarkRead sent!')
+            } else {
+            console.error("Unable to send markMarkRead:" + err);
+            }
+        }); 
+    }
 
 let getUserName =  (sender_psid) => {
    return new Promise((resolve,reject) => {
