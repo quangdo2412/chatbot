@@ -159,6 +159,141 @@ let getMainMenuTemplate = () => {
               {
                 type: "postback",
                 title: "CHI TIET KHONG GIAN NHA HANG",
+                payload: "SHOW_ROOM",
+              },
+             
+            ],
+          }
+          
+          ,
+        ],
+      },
+    },
+}
+return response;
+}
+
+let handleSendLunchMenu = (sender_psid) => {
+  return new Promise(async (resolve, reject) => {
+    try{
+        let response1 = getLunchMenuTemplate();
+        await callSendAPI(sender_psid,response1);
+        resolve('done')
+    }catch(e){
+        reject(e);
+    }
+})
+}
+
+let getLunchMenuTemplate = () => {
+  let response = {
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "generic",
+        elements: [
+          {
+            title: "Mon trang mieng",
+            subtitle: "Nha hang co nhieu mon trang mieng hap dan",
+            image_url: IMAGE_MENU1 ,
+            buttons: [
+              {
+                type: "postback",
+                title: "XEM CHI TIET",
+                payload: "VIEW_APPETIZERS",
+              },
+            ],
+          },
+          {
+            title: "CA RAN",
+            subtitle: "MON CA AN RAT NGON",
+            image_url: IMAGE_MENU2 ,
+            buttons: [
+              {
+                type: "postback",
+                title: "XEM CHI TIET",
+                payload: "VIEW_FISH",
+              },
+            ],
+          },
+          {
+            title: "MON SALAD",
+            subtitle: "NHA HANG CO SALAD RAT NGON DAM BAO CHAT LUONG",
+            image_url: IMAGE_MENU3 ,
+            buttons: [
+              {
+                type: "postback",
+                title: "XEM CHI TIET",
+                payload: "VIEW_SALAD",
+              },
+             
+            ],
+          }
+          
+          ,
+        ],
+      },
+    },
+}
+return response;
+}
+
+let handleSendDinnerMenu = (sender_psid) => {
+  return new Promise(async (resolve, reject) => {
+    try{
+        let response1 = getDinnerMenuTemplate();
+        await callSendAPI(sender_psid,response1);
+        resolve('done')
+    }catch(e){
+        reject(e);
+    }
+})
+}
+
+let getDinnerMenuTemplate = () => {
+  let response = {
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "generic",
+        elements: [
+          {
+            title: "menu cua nha hang",
+            subtitle: "chung toi han hanh mang den cho ban bua trua va bua toi",
+            image_url: IMAGE_MENU1 ,
+            buttons: [
+              {
+                type: "postback",
+                title: "BUA TRUA",
+                payload: "LUNCH_MENU",
+              },
+              {
+                type: "postback",
+                title: "BUA TOI",
+                payload: "DINNER_MENU",
+              },
+            ],
+          },
+          {
+            title: "GIO MO CUA",
+            subtitle: "TU THU 2 DEN THU 7 - NGHI CN 10AM-11PM",
+            image_url: IMAGE_MENU2 ,
+            buttons: [
+              {
+                type: "postback",
+                title: "DAT BAN",
+                payload: "RESERVE_TABLE",
+              },
+            ],
+          },
+          {
+            title: "KHONG GIAN NHA HANG",
+            subtitle: "NHA HANG CO SUC CHUA LEN TOI 400 NGUOI",
+            image_url: IMAGE_MENU3 ,
+            buttons: [
+              {
+                type: "postback",
+                title: "CHI TIET KHONG GIAN NHA HANG",
                 payload: "SHOW_ROOM,",
               },
              
@@ -176,4 +311,6 @@ return response;
 module.exports = {
     handleGetStarted : handleGetStarted,
     handleSendMainMenu : handleSendMainMenu,
+    handleSendLunchMenu : handleSendLunchMenu,
+    handleSendDinnerMenu : handleSendDinnerMenu,
 }
