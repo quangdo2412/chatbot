@@ -344,43 +344,51 @@ let getDinnerMenuTemplate = () => {
         template_type: "generic",
         elements: [
           {
-            title: "menu cua nha hang",
-            subtitle: "chung toi han hanh mang den cho ban bua trua va bua toi",
-            image_url: IMAGE_MENU1 ,
+            title: "Mon trang mieng",
+            subtitle: "Nha hang co nhieu mon trang mieng hap dan",
+            image_url: IMAGE_APPETIZERS ,
             buttons: [
               {
                 type: "postback",
-                title: "BUA TRUA",
-                payload: "LUNCH_MENU",
-              },
-              {
-                type: "postback",
-                title: "BUA TOI",
-                payload: "DINNER_MENU",
+                title: "XEM CHI TIET",
+                payload: "VIEW_APPETIZERS",
               },
             ],
           },
           {
-            title: "GIO MO CUA",
-            subtitle: "TU THU 2 DEN THU 7 - NGHI CN 10AM-11PM",
-            image_url: IMAGE_MENU2 ,
+            title: "MON CA",
+            subtitle: "MON CA AN RAT NGON",
+            image_url: IMAGE_FISH ,
             buttons: [
               {
                 type: "postback",
-                title: "DAT BAN",
-                payload: "RESERVE_TABLE",
+                title: "XEM CHI TIET",
+                payload: "VIEW_FISH",
               },
             ],
           },
           {
-            title: "KHONG GIAN NHA HANG",
-            subtitle: "NHA HANG CO SUC CHUA LEN TOI 400 NGUOI",
-            image_url: IMAGE_MENU3 ,
+            title: "MON SALAD",
+            subtitle: "NHA HANG CO SALAD RAT NGON DAM BAO CHAT LUONG",
+            image_url: IMAGE_SALAD ,
             buttons: [
               {
                 type: "postback",
-                title: "CHI TIET KHONG GIAN NHA HANG",
-                payload: "SHOW_ROOM,",
+                title: "XEM CHI TIET",
+                payload: "VIEW_SALAD",
+              },
+             
+            ],
+          },
+          {
+            title: "QUAY TRO LAI ",
+            subtitle: "QUAY LAI MENU CHINH",
+            image_url: IMAGE_BACK_MAIN_MENU ,
+            buttons: [
+              {
+                type: "postback",
+                title: "BACK",
+                payload: "BACK_TO_MAIN_MENU",
               },
              
             ],
