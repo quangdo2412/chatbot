@@ -12,8 +12,19 @@ const IMAGE_APPETIZERS='https://doanhnhanplus.vn/wp-content/uploads/2020/02/Yumm
 const IMAGE_FISH='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXsAO4iIHw4sxF0-q8nO2sq61ybTc4LqnBxX5WO9345w&s';
 const IMAGE_SALAD='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSChqOEg1gi7lDVY_PfFCE3-5D5n8bD00ytdRPOPkqQWA&s';
 
-const IMAGE_BACK_MAIN_MENU = 'https://i.pinimg.com/736x/44/c9/94/44c9947e11ff63b178641296a8d09556.jpg'
+const IMAGE_BACK_MAIN_MENU = 'https://i.pinimg.com/736x/44/c9/94/44c9947e11ff63b178641296a8d09556.jpg';
 
+const IMAGE_VIEW_APPTIZER1='https://img.lovepik.com/free-png/20220107/lovepik-hand-painted-summer-cute-cat-watermelon-pool-spa-png-image_401199731_wh860.png';
+const IMAGE_VIEW_APPTIZER2='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGSUpSmFm9i_G1go0xZzbehSDWqokdD2-b4DlINFX50A&s';
+const IMAGE_VIEW_APPTIZER3='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg1SXC82toG3rCKsWB7NcnyQl0m6ZJDi0NV4gAfgzfjg&s';
+
+const IMAGE_VIEW_FISH1='https://banner2.cleanpng.com/20180601/kzz/kisspng-salmon-as-food-salmon-as-food-clip-art-fish-scales-5b10fdcde7df07.6852989015278402059498.jpg';
+const IMAGE_VIEW_FISH2='https://png.pngtree.com/png-clipart/20210316/ourlarge/pngtree-cute-cartoon-blue-whale-sea-creature-ocean-png-image_3067140.jpg';
+const IMAGE_VIEW_FISH3='https://gcs.tripi.vn/public-tripi/tripi-feed/img/475223QRE/anh-mo-ta.png';
+
+const IMAGE_VIEW_SALAD1='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw85vD50LsQ_k4tWO1OFH33ahuZAgebsDGSaNMoSl25A&s';
+const IMAGE_VIEW_SALAD2='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAKOUblL-E8YJHTsJFlaZY_M1k2RcN9ReXiS41C88wOQ&s';
+const IMAGE_VIEW_SALAD3='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5ov_26z8hUkIa8zKZfyGYigjeh9eoexAA41YfRE6EZA&s';
 
 let callSendAPI = (sender_psid,response) => {
 // Construct the message body
@@ -335,10 +346,181 @@ let handleBackToMainMenu = async (sender_psid) => {
   await handleSendMainMenu(sender_psid);
 }
 
+let handleViewAppetizers = (sender_psid) => {
+  return new Promise(async (resolve, reject) => {
+    try{
+        let response1 = getViewAppetizersTemplate();
+        await callSendAPI(sender_psid,response1);
+        resolve('done')
+    }catch(e){
+        reject(e);
+    }
+})
+}
+
+let getViewAppetizersTemplate = () => {
+  let response = {
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "generic",
+        elements: [
+          {
+            title: "DUA HAU",
+            subtitle: "20K/1 DIA",
+            image_url: IMAGE_VIEW_APPTIZER1 ,
+          },
+          {
+            title: "XOAI",
+            subtitle: "20K / 1 DIA",
+            image_url: IMAGE_VIEW_APPTIZER2 ,
+          },
+          {
+            title: "TAO",
+            subtitle: "500K 1 / QUA",
+            image_url: IMAGE_VIEW_APPTIZER3 ,
+          },
+          {
+            title: "QUAY TRO LAI",
+            subtitle: "QUAY TRO LAI MAIN MENU",
+            image_url: IMAGE_BACK_MAIN_MENU ,
+            buttons: [
+              {
+                type: "postback",
+                title: "QUAY TRO LAI MAIN MENU",
+                payload: "BACK_TO_MAIN_MENU,",
+              },
+             
+            ],
+          }
+          
+          ,
+        ],
+      },
+    },
+}
+return response;
+}
+
+let handleViewFish = (sender_psid) => {
+  return new Promise(async (resolve, reject) => {
+    try{
+        let response1 = getViewFishTemplate();
+        await callSendAPI(sender_psid,response1);
+        resolve('done')
+    }catch(e){
+        reject(e);
+    }
+})
+}
+
+let getViewFishTemplate = () => {
+  let response = {
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "generic",
+        elements: [
+          {
+            title: "CA HOI",
+            subtitle: "50$$",
+            image_url: IMAGE_VIEW_FISH1 ,
+          },
+          {
+            title: "CA MAP",
+            subtitle: "500$$",
+            image_url: IMAGE_VIEW_FISH2 ,
+          },
+          {
+            title: "CA HEO",
+            subtitle: "6000$$",
+            image_url: IMAGE_VIEW_FISH3 ,
+          },
+          {
+            title: "QUAY TRO LAI",
+            subtitle: "QUAY TRO LAI MAIN MENU",
+            image_url: IMAGE_BACK_MAIN_MENU ,
+            buttons: [
+              {
+                type: "postback",
+                title: "QUAY TRO LAI MAIN MENU",
+                payload: "BACK_TO_MAIN_MENU,",
+              },
+             
+            ],
+          }
+          
+          ,
+        ],
+      },
+    },
+}
+return response;
+}
+
+let handleViewSaLad = (sender_psid) => {
+  return new Promise(async (resolve, reject) => {
+    try{
+        let response1 = getViewSaLadTemplate();
+        await callSendAPI(sender_psid,response1);
+        resolve('done')
+    }catch(e){
+        reject(e);
+    }
+})
+}
+
+let getViewSaLadTemplate = () => {
+  let response = {
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "generic",
+        elements: [
+          {
+            title: "SALAD GA",
+            subtitle: "20$$",
+            image_url: IMAGE_VIEW_SALAD1 ,
+          },
+          {
+            title: "SALAD KHOAI",
+            subtitle: "200$$",
+            image_url: IMAGE_VIEW_SALAD2 ,
+          },
+          {
+            title: "SALAD BO",
+            subtitle: "100$",
+            image_url: IMAGE_VIEW_SALAD3 ,
+          },
+          {
+            title: "QUAY TRO LAI",
+            subtitle: "QUAY TRO LAI MAIN MENU",
+            image_url: IMAGE_BACK_MAIN_MENU ,
+            buttons: [
+              {
+                type: "postback",
+                title: "QUAY TRO LAI MAIN MENU",
+                payload: "BACK_TO_MAIN_MENU,",
+              },
+             
+            ],
+          }
+          
+          ,
+        ],
+      },
+    },
+}
+return response;
+}
+
 module.exports = {
     handleGetStarted : handleGetStarted,
     handleSendMainMenu : handleSendMainMenu,
     handleSendLunchMenu : handleSendLunchMenu,
     handleSendDinnerMenu : handleSendDinnerMenu,
     handleBackToMainMenu: handleBackToMainMenu,
+    handleViewAppetizers: handleViewAppetizers,
+    handleViewFish: handleViewFish,
+    handleViewSaLad:handleViewSaLad
 }
