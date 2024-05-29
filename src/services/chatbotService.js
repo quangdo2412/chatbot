@@ -186,9 +186,11 @@ let getStartedTemplate = () => {
                 payload: "MAIN_MENU",
               },
               {
-                type: "postback",
+                type: "web_url",
+                url: `${process.env.URL_WEB_VIEW_ORDER}`,
                 title: "DAT BAN",
-                payload: "RESERVE_TABLE",
+                webview_height_ratio:"tall",
+                messenger_extensions: true
               },
               {
                 type: "postback",
@@ -246,9 +248,11 @@ let getMainMenuTemplate = () => {
             image_url: IMAGE_MENU2,
             buttons: [
               {
-                type: "postback",
+                type: "web_url",
+                url: `${process.env.URL_WEB_VIEW_ORDER}`,
                 title: "DAT BAN",
-                payload: "RESERVE_TABLE",
+                webview_height_ratio:"tall",
+                messenger_extensions: true
               },
             ],
           },
@@ -620,9 +624,11 @@ let getButtonRoomsTemplate = () => {
         "text":"Nha hang co the phuc vu toi da 2412 khach",
         "buttons":[
           {
-            "type": "postback",
-            "title": "DAT BAN",
-            "payload": "RESERVE_TABLE",
+            type: "web_url",
+            url: `${process.env.URL_WEB_VIEW_ORDER}`,
+            title: "DAT BAN",
+            webview_height_ratio:"tall",
+            messenger_extensions: true
           },
           {
             "type": "postback",
