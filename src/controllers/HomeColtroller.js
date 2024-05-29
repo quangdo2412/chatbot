@@ -148,10 +148,13 @@ async function handlePostback(sender_psid, received_postback) {
     case 'VIEW_SALAD':
       await chatbotService.handleViewSaLad(sender_psid);
       break;
-    
     case 'BACK_TO_MAIN_MENU':
       await chatbotService.handleBackToMainMenu(sender_psid);
-    default:
+      break;
+    case 'SHOW_ROOM':
+      await chatbotService.handeleShowDetailRooms(sender_psid);
+      break;
+      default:
       response = {"text" : `opp! i dont know reponse with postback ${payload}`}
   }
   // // Send the message to acknowledge the postback
