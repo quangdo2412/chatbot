@@ -279,7 +279,7 @@ let handlePostReserveTable = async (req, res) => {
     // you can check database for customer order's status
 
     let response1 = {
-      text: `---thong tin khach hang dat ban---
+      "text": `---thong tin khach hang dat ban---
         \nHo va ten: ${customerName}
         \nEmail: ${req.body.email}
         \nSo dien thoai: ${req.body.phoneNumber}
