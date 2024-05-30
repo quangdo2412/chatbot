@@ -652,4 +652,5 @@ module.exports = {
   handleViewFish: handleViewFish,
   handleViewSaLad: handleViewSaLad,
   handeleShowDetailRooms: handeleShowDetailRooms,
+  callSendAPI:callSendAPI
 };

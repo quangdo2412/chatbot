@@ -261,6 +261,34 @@ let handleReserveTable = (req,res) => {
   return res.render('reserve-table.ejs')
 }
 
+let handlePostReserveTable = async (req,res) => {
+  try {
+    let customerName = "";
+    if (req.body.customerName === "") {
+        customerName = "De trong";
+    } else customerName = req.body.customerName;
+
+    // I demo response with sample text
+    // you can check database for customer order's status
+
+    let response1 = {
+        "text": `---thong tin khach hang dat ban---
+        \nHo va ten: ${customerName}
+        \nEmail: ${req.body.email}
+        \nSo dien thoai: ${req.body.phoneNumber}
+        `
+    };
+    await chatbotService.callSendAPI(req.body.psid, response1);
+    return res.status(200).json({
+        message: "ok"
+    });
+} catch (e) {
+  console.log('Loi post reserve table: ',e)
+  return res.status(200).json({
+    message: "sever error"
+});
+}
+}
 module.exports = {
   getHomePage: getHomePage,
   postWebhook: postWebhook,
@@ -268,4 +296,5 @@ module.exports = {
   setupProfile: setupProfile,
   setupPersistentMenu: setupPersistentMenu,
   handleReserveTable: handleReserveTable,
+  handlePostReserveTable:handlePostReserveTable
 };
