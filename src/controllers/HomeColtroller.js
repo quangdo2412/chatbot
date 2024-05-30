@@ -119,43 +119,43 @@ async function handlePostback(sender_psid, received_postback) {
   let payload = received_postback.payload;
 
   // Set the response based on the postback payload
-  switch(payload) {
-    case 'yes':
+  switch (payload) {
+    case "yes":
       response = { text: "Thanks you!" };
       break;
-    case 'no':
+    case "no":
       response = { text: "Oops, try sending another image." };
       break;
-    case 'RESTART_BOT':
-    case 'GET_STARTED':
+    case "RESTART_BOT":
+    case "GET_STARTED":
       await chatbotService.handleGetStarted(sender_psid);
       break;
-    case 'MAIN_MENU':
+    case "MAIN_MENU":
       await chatbotService.handleSendMainMenu(sender_psid);
       break;
-    case 'LUNCH_MENU':
+    case "LUNCH_MENU":
       await chatbotService.handleSendLunchMenu(sender_psid);
       break;
-    case 'DINNER_MENU':
+    case "DINNER_MENU":
       await chatbotService.handleSendDinnerMenu(sender_psid);
       break;
-    case 'VIEW_APPETIZERS':
+    case "VIEW_APPETIZERS":
       await chatbotService.handleViewAppetizers(sender_psid);
       break;
-    case 'VIEW_FISH':
+    case "VIEW_FISH":
       await chatbotService.handleViewFish(sender_psid);
       break;
-    case 'VIEW_SALAD':
+    case "VIEW_SALAD":
       await chatbotService.handleViewSaLad(sender_psid);
       break;
-    case 'BACK_TO_MAIN_MENU':
+    case "BACK_TO_MAIN_MENU":
       await chatbotService.handleBackToMainMenu(sender_psid);
       break;
-    case 'SHOW_ROOM':
+    case "SHOW_ROOM":
       await chatbotService.handeleShowDetailRooms(sender_psid);
       break;
-      default:
-      response = {"text" : `opp! i dont know reponse with postback ${payload}`}
+    default:
+      response = { text: `opp! i dont know reponse with postback ${payload}` };
   }
   // // Send the message to acknowledge the postback
   // callSendAPI(sender_psid, response);
@@ -165,130 +165,137 @@ async function handlePostback(sender_psid, received_postback) {
 function callSendAPI(sender_psid, response) {
   // Construct the message body
   let request_body = {
-    "recipient": {
-      "id": sender_psid
+    recipient: {
+      id: sender_psid,
     },
-    "message": response
-  }
+    message: response,
+  };
 
   // Send the HTTP request to the Messenger Platform
-  request({
-    "uri": "https://graph.facebook.com/v2.6/me/messages",
-    "qs": { "access_token": process.env.PAGE_ACCESS_TOKEN },
-    "method": "POST",
-    "json": request_body
-  }, (err, res, body) => {
-    if (!err) {
-      console.log('message sent!')
-    } else {
-      console.error("Unable to send message:" + err);
+  request(
+    {
+      uri: "https://graph.facebook.com/v2.6/me/messages",
+      qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
+      method: "POST",
+      json: request_body,
+    },
+    (err, res, body) => {
+      if (!err) {
+        console.log("message sent!");
+      } else {
+        console.error("Unable to send message:" + err);
+      }
     }
-  }); 
+  );
 }
 
 let setupProfile = async (req, res) => {
   // Construct the message body
-    let request_body = {
-    "get_started" : { "payload" :  "GET_STARTED" },
-    "whitelisted_domains" : ["https://vmu-retaurent.onrender.com/"]
-    }
+  let request_body = {
+    get_started: { payload: "GET_STARTED" },
+    whitelisted_domains: ["https://vmu-retaurent.onrender.com/"],
+  };
 
-    // Send the HTTP request to the Messenger Platform
-    await request({
-      "uri": `https://graph.facebook.com/v20.0/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`,
-      "qs": { "access_token": PAGE_ACCESS_TOKEN },
-      "method": "POST",
-      "json": request_body
-    }, (err, res, body) => {
-      console.log(body)
+  // Send the HTTP request to the Messenger Platform
+  await request(
+    {
+      uri: `https://graph.facebook.com/v20.0/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`,
+      qs: { access_token: PAGE_ACCESS_TOKEN },
+      method: "POST",
+      json: request_body,
+    },
+    (err, res, body) => {
+      console.log(body);
       if (!err) {
-        console.log('Setup user profile success123')
+        console.log("Setup user profile success123");
       } else {
         console.error("Unable to set up profile:" + err);
       }
-    }); 
-    return res.send("Setup user profile success!!");
+    }
+  );
+  return res.send("Setup user profile success!!");
 };
 
-
-
-let setupPersistentMenu = async (req,res) => {
+let setupPersistentMenu = async (req, res) => {
   let request_body = {
-    "persistent_menu": [
+    persistent_menu: [
       {
-          "locale": "default",
-          "composer_input_disabled": false,
-          "call_to_actions": [
-              {
-                  "type": "web_url",
-                  "title": "Youtube chanel",
-                  "url": "https://www.youtube.com/@BeatHouse.102",
-                  "webview_height_ratio": "full"
-              },
-              {
-                  "type": "web_url",
-                  "title": "Facebook page",
-                  "url": "https://www.facebook.com/",
-                  "webview_height_ratio": "full"
-              },
-              {
-                  "type": "postback",
-                  "title": "Khoi dong lai bot",
-                  "payload": "RESTART_BOT"
-              }
-          ]
-      }
-  ]
-    }
-    // Send the HTTP request to the Messenger Platform
-    await request({
-      "uri": `https://graph.facebook.com/v20.0/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`,
-      "qs": { "access_token": PAGE_ACCESS_TOKEN },
-      "method": "POST",
-      "json": request_body
-    }, (err, res, body) => {
-      console.log(body)
+        locale: "default",
+        composer_input_disabled: false,
+        call_to_actions: [
+          {
+            type: "web_url",
+            title: "Youtube chanel",
+            url: "https://www.youtube.com/@BeatHouse.102",
+            webview_height_ratio: "full",
+          },
+          {
+            type: "web_url",
+            title: "Facebook page",
+            url: "https://www.facebook.com/",
+            webview_height_ratio: "full",
+          },
+          {
+            type: "postback",
+            title: "Khoi dong lai bot",
+            payload: "RESTART_BOT",
+          },
+        ],
+      },
+    ],
+  };
+  // Send the HTTP request to the Messenger Platform
+  await request(
+    {
+      uri: `https://graph.facebook.com/v20.0/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`,
+      qs: { access_token: PAGE_ACCESS_TOKEN },
+      method: "POST",
+      json: request_body,
+    },
+    (err, res, body) => {
+      console.log(body);
       if (!err) {
-        console.log('Setup persistent menu success')
+        console.log("Setup persistent menu success");
       } else {
         console.error("Unable to set up profile:" + err);
       }
-    }); 
-    return res.send("Setup persistent menu success");
-}
+    }
+  );
+  return res.send("Setup persistent menu success");
+};
 
-let handleReserveTable = (req,res) => {
-  return res.render('reserve-table.ejs')
-}
+let handleReserveTable = (req, res) => {
+  return res.render("reserve-table.ejs");
+};
 
-let handlePostReserveTable = async (req,res) => {
+let handlePostReserveTable = async (req, res) => {
   try {
     let customerName = "";
     if (req.body.customerName === "") {
-        customerName = "De trong";
+      customerName = "De trong";
     } else customerName = req.body.customerName;
 
     // I demo response with sample text
     // you can check database for customer order's status
 
     let response1 = {
-        "text": `---thong tin khach hang dat ban---
+      text: `---thong tin khach hang dat ban---
         \nHo va ten: ${customerName}
         \nEmail: ${req.body.email}
         \nSo dien thoai: ${req.body.phoneNumber}
-        `
+        `,
     };
     await chatbotService.callSendAPI(req.body.psid, response1);
     return res.status(200).json({
-        message: "ok"
+      message: "ok",
     });
-} catch (e) {
-  console.log('Loi post reserve table: ',e)
-  return res.status(200).json({
-    message: "sever error"
-});
-}
-}
+  } catch (e) {
+    console.log("Loi post reserve table: ", e);
+    return res.status(200).json({
+      message: "sever error",
+    });
+  }
+};
 module.exports = {
   getHomePage: getHomePage,
   postWebhook: postWebhook,
@@ -296,5 +303,5 @@ module.exports = {
   setupProfile: setupProfile,
   setupPersistentMenu: setupPersistentMenu,
   handleReserveTable: handleReserveTable,
-  handlePostReserveTable:handlePostReserveTable
+  handlePostReserveTable: handlePostReserveTable,
 };
