@@ -283,7 +283,7 @@ let handlePostReserveTable = async (req, res) => {
         \nHo va ten: ${customerName}
         \nEmail: ${req.body.email}
         \nSo dien thoai: ${req.body.phoneNumber}
-        `,
+        `
     };
     await chatbotService.callSendAPI(req.body.psid, response1);
     return res.status(200).json({
