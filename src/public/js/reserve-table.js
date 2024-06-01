@@ -7,18 +7,20 @@
 }(document, 'script', 'Messenger'));
 
 window.extAsyncInit = function () {
-  MessengerExtensions.getContext('970603840932604', 
-  function success(thread_context) {
-    // success
-    //set psid to input
-    $("#psid").val(thread_context.psid);
-    handleClickButtonReserveTable();
-},
-function error(err) {
-    // error
-    console.log('Lỗi đặt bàn', err);
-}
-);
+    // the Messenger Extensions JS SDK is done loading 
+
+    MessengerExtensions.getContext('970603840932604',
+        function success(thread_context) {
+            // success
+            //set psid to input
+            $("#psid").val(thread_context.psid);
+            handleClickButtonReserveTable();
+        },
+        function error(err) {
+            // error
+            console.log('Lỗi đặt bàn Eric bot', err);
+        }
+    );
 };
 
 //validate inputs
@@ -27,7 +29,7 @@ function validateInputFields() {
 
     let email = $("#email");
     let phoneNumber = $("#phoneNumber");
- 
+
     if (!email.val().match(EMAIL_REG)) {
         email.addClass("is-invalid");
         return true;
@@ -45,7 +47,8 @@ function validateInputFields() {
     return false;
 }
 
-function handleClickButtonReserveTable (){
+
+function handleClickButtonReserveTable() {
     $("#btnReserveTable").on("click", function (e) {
         let check = validateInputFields(); //return true or false
 
