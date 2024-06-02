@@ -270,14 +270,17 @@ let handleReserveTable = (req, res) => {
 
 let handlePostReserveTable = async (req, res) => {
   try {
+    // Kiểm tra và xử lý PSID
+    if (!req.body.psid || typeof req.body.psid !== 'string') {
+      return res.status(400).json({ message: 'PSID không hợp lệ.' });
+    }
+
     let customerName = "";
     if (req.body.customerName === "") {
       customerName = "De trong";
     } else customerName = req.body.customerName;
 
-    // I demo response with sample text
-    // you can check database for customer order's status
-
+    // Xử lý tin nhắn
     let response1 = {
       "text": `---thong tin khach hang dat ban---
         \nHo va ten: ${customerName}
@@ -286,16 +289,18 @@ let handlePostReserveTable = async (req, res) => {
         `
     };
     await chatbotService.callSendAPI(req.body.psid, response1);
+    
     return res.status(200).json({
       message: "ok",
     });
   } catch (e) {
     console.log("Loi post reserve table: ", e);
-    return res.status(200).json({
-      message: "sever error",
+    return res.status(500).json({
+      message: "server error",
     });
   }
 };
+
 module.exports = {
   getHomePage: getHomePage,
   postWebhook: postWebhook,
