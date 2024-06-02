@@ -624,11 +624,11 @@ let getButtonRoomsTemplate = () => {
         "text":"Nha hang co the phuc vu toi da 2412 khach",
         "buttons":[
           {
-            type: "web_url",
-            url: `${process.env.URL_WEB_VIEW_ORDER}`,
-            title: "DAT BAN",
-            webview_height_ratio:"tall",
-            messenger_extensions: true
+            "type": "web_url",
+            "url": `${process.env.URL_WEB_VIEW_ORDER}`,
+            "title": "DAT BAN",
+            "webview_height_ratio":"tall",
+            "messenger_extensions": true
           },
           {
             "type": "postback",
@@ -652,5 +652,5 @@ module.exports = {
   handleViewFish: handleViewFish,
   handleViewSaLad: handleViewSaLad,
   handeleShowDetailRooms: handeleShowDetailRooms,
-  callSendAPI:callSendAPI
+  callSendAPI:callSendAPI,
 };
