@@ -45,9 +45,9 @@ const IMAGE_VIEW_SALAD3 =
 const IMAGE_ROOM =
   "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/28/ef/3d/09/french-grill-by-night.jpg?w=600&h=-1&s=1";
 
-  
 
- let callSendAPI = (sender_psid, response) => {
+
+  let callSendAPI = (sender_psid, response) => {
     return new Promise((resolve, reject) => {
         try {
             let request_body = {
@@ -59,7 +59,7 @@ const IMAGE_ROOM =
 
             // Send the HTTP request to the Messenger Platform
             request({
-                "uri": "https://graph.facebook.com/v9.0/me/messages",
+                "uri": "https://graph.facebook.com/v2.6/me/messages",
                 "qs": { "access_token": PAGE_ACCESS_TOKEN },
                 "method": "POST",
                 "json": request_body
@@ -91,7 +91,7 @@ let sendTypingOn = (sender_psid) => {
 
           // Send the HTTP request to the Messenger Platform
           request({
-              "uri": "https://graph.facebook.com/v6.0/me/messages",
+              "uri": "https://graph.facebook.com/v2.6/me/messages",
               "qs": { "access_token": PAGE_ACCESS_TOKEN },
               "method": "POST",
               "json": request_body
@@ -121,7 +121,7 @@ let markMarkRead = (sender_psid) => {
 
           // Send the HTTP request to the Messenger Platform
           request({
-              "uri": "https://graph.facebook.com/v6.0/me/messages",
+              "uri": "https://graph.facebook.com/v2.6/me/messages",
               "qs": { "access_token": PAGE_ACCESS_TOKEN },
               "method": "POST",
               "json": request_body
