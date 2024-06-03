@@ -44,37 +44,36 @@ const IMAGE_VIEW_SALAD3 =
 
 const IMAGE_ROOM =
   "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/28/ef/3d/09/french-grill-by-night.jpg?w=600&h=-1&s=1";
+  
 
-  let callSendAPI = (sender_psid, response) => {
-    return new Promise((resolve, reject) => {
-        try {
-            let request_body = {
-                "recipient": {
-                    "id": sender_psid
-                },
-                "message": response,
-            };
-          
-            // Send the HTTP request to the Messenger Platform
-            request({
-                "uri": "https://graph.facebook.com/v9.0/me/messages",
-                "qs": { "access_token": PAGE_ACCESS_TOKEN },
-                "method": "POST",
-                "json": request_body
-            }, (err, res, body) => {
-                console.log(res)
-                console.log(body)
-                if (!err) {
-                    console.log("message sent!");
-                    resolve('done!')
-                } else {
-                    reject("Unable to send message:" + err);
-                }
-            });
-        } catch (e) {
-            reject(e);
-        }
-    });
+let callSendAPI = async (sender_psid, response) => {
+  // Construct the message body
+  let request_body = {
+    "recipient": {
+      "id": sender_psid,
+    },
+    "message": response,
+  };
+
+  await markMarkRead(sender_psid);
+  await sendTypingOn(sender_psid);
+
+  // Send the HTTP request to the Messenger Platform
+  request(
+    {
+      uri: "https://graph.facebook.com/v2.6/me/messages",
+      qs: { access_token: PAGE_ACCESS_TOKEN },
+      method: "POST",
+      json: request_body,
+    },
+    (err, res, body) => {
+      if (!err) {
+        console.log("message sent!");
+      } else {
+        console.error("Unable to send message:" + err);
+      }
+    }
+  );
 };
 
 let sendTypingOn = (sender_psid) => {

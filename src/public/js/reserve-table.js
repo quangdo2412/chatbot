@@ -9,7 +9,7 @@
 window.extAsyncInit = function () {
     // the Messenger Extensions JS SDK is done loading 
 
-    MessengerExtensions.getContext('970603840932604',
+    MessengerExtensions.getContext('753933095237424',
         function success(thread_context) {
             // success
             //set psid to input
@@ -48,7 +48,7 @@ function validateInputFields() {
 }
 
 
-function handleClickButtonReserveTable () {
+function handleClickButtonReserveTable() {
     $("#btnReserveTable").on("click", function (e) {
         let check = validateInputFields(); //return true or false
 
