@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -6,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đặt bàn nhà hàng</title>
     <script>
-        let senderId = "<%= senderId %>"
+        let senderId = "<%= senderId %>";
     </script>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -47,40 +48,32 @@
                     <input type="text" id="phoneNumber" class="form-control" placeholder="Số điện thoại...">
                     <div class="invalid-feedback">Số điện thoại không hợp lệ.</div>
                 </div>
-                <button class="btn btn-primary" id="btnReserveTable" onclick=handleClickButtonReserveTable()> ĐẶT BÀN
-                </button>
+                <button class="btn btn-primary" id="btnReserveTable">ĐẶT BÀN</button>
             </div>
-
         </div>
-
     </div>
 
     <script>
-            (function (d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) { return; }
-                js = d.createElement(s); js.id = id;
-                js.src = "//connect.facebook.net/en_US/messenger.Extensions.js";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'Messenger'));
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/messenger.Extensions.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'Messenger'));
 
         window.extAsyncInit = function () {
             // the Messenger Extensions JS SDK is done loading 
-
             MessengerExtensions.getContext('970603840932604',
                 function success(thread_context) {
                     // success 
                     //set psid to input
                     $("#psid").val(thread_context.psid);
-                    handleClickButtonReserveTable();
                 },
                 function error(err) {
                     // error
                     console.log('Lỗi đặt bàn bot', err);
-
-
                     $("#psid").val(senderId);
-                    handleClickButtonReserveTable();
                 }
             );
         };
@@ -109,42 +102,43 @@
             return false;
         }
 
-
         function handleClickButtonReserveTable() {
-            $("#btnReserveTable").on("click", function (e) {
-                let check = validateInputFields(); //return true or false
+            let check = validateInputFields(); //return true or false
 
-                let data = {
-                    psid: $("#psid").val(),
-                    customerName: $("#customerName").val(),
-                    email: $("#email").val(),
-                    phoneNumber: $("#phoneNumber").val()
-                };
+            let data = {
+                psid: $("#psid").val(),
+                customerName: $("#customerName").val(),
+                email: $("#email").val(),
+                phoneNumber: $("#phoneNumber").val()
+            };
 
-                if (!check) {
-                    //close webview
-                    MessengerExtensions.requestCloseBrowser(function success() {
-                        // webview closed
-                    }, function error(err) {
-                        // an error occurred
-                        console.log(err);
-                    });
+            if (!check) {
+                //close webview
+                MessengerExtensions.requestCloseBrowser(function success() {
+                    // webview closed
+                }, function error(err) {
+                    // an error occurred
+                    console.log(err);
+                });
 
-                    //send data to node.js server s
-                    $.ajax({
-                        url: `${window.location.origin}/reserve-table-ajax`,
-                        method: "POST",
-                        data: data,
-                        success: function (data) {
-                            console.log(data);
-                        },
-                        error: function (error) {
-                            console.log(error);
-                        }
-                    })
-                }
-            });
+                //send data to node.js server
+                $.ajax({
+                    url: `${window.location.origin}/reserve-table-ajax`,
+                    method: "POST",
+                    data: data,
+                    success: function (data) {
+                        console.log(data);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                })
+            }
         }
+
+        $(document).ready(function () {
+            $("#btnReserveTable").on("click", handleClickButtonReserveTable);
+        });
     </script>
 </body>
 
