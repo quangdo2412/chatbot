@@ -45,7 +45,7 @@ const IMAGE_VIEW_SALAD3 =
 const IMAGE_ROOM =
   "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/28/ef/3d/09/french-grill-by-night.jpg?w=600&h=-1&s=1";
 
-  let sendMessage = (sender_psid, response) => {
+  let callSendAPI = (sender_psid, response) => {
     return new Promise((resolve, reject) => {
         try {
             let request_body = {
@@ -659,5 +659,5 @@ module.exports = {
   handleViewFish: handleViewFish,
   handleViewSaLad: handleViewSaLad,
   handeleShowDetailRooms: handeleShowDetailRooms,
-  sendMessage:sendMessage,
+  callSendAPI:callSendAPI,
 };
