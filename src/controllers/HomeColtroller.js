@@ -267,7 +267,7 @@ let setupPersistentMenu = async (req, res) => {
 let handleReserveTable = (req, res) => {
   let senderId = req.params.senderId;
   return res.render("reserve-table.ejs",{
-    senderId: senderId
+    senderId:senderId
   });
 };
 
@@ -276,7 +276,7 @@ let handlePostReserveTable = async (req, res) => {
 
     let customerName = "";
     if (req.body.customerName === "") {
-      customerName = "De trong";
+      customerName = chatbotService.getUserName(req.body.psid);
     } else customerName = req.body.customerName;
 
     // Xử lý tin nhắn

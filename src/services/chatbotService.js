@@ -659,4 +659,5 @@ module.exports = {
   handleViewSaLad: handleViewSaLad,
   handeleShowDetailRooms: handeleShowDetailRooms,
   callSendAPI:callSendAPI,
+  getUserName,getUserName,
 };
