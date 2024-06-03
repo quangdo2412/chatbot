@@ -261,7 +261,7 @@ let setupPersistentMenu = async (req, res) => {
       }
     }
   );
-  return res.send("Setup persistent menu success"); 
+  return res.send("Setup persistent menu success");
 };
 
 let handleReserveTable = (req, res) => {
