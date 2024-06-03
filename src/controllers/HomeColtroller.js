@@ -261,7 +261,7 @@ let setupPersistentMenu = async (req, res) => {
       }
     }
   );
-  return res.send("Setup persistent menu success");
+  return res.send("Setup persistent menu success"); 
 };
 
 let handleReserveTable = (req, res) => {
@@ -284,7 +284,7 @@ let handlePostReserveTable = async (req, res) => {
         \nSo dien thoai: ${req.body.phoneNumber}
         `
     };
-    await chatbotService.sendMessage(req.body.psid, response1);
+    await chatbotService.callSendAPI(req.body.psid, response1);
     
     return res.status(200).json({
       message: "ok",
