@@ -193,7 +193,7 @@ let getStartedTemplate = (senderID) => {
               },
               {
                 type: "web_url",
-                url: `${process.env.URL_WEB_VIEW_ORDER}?senderID=${senderID}`,
+                url: `${process.env.URL_WEB_VIEW_ORDER}/${senderID}`,
                 title: "DAT BAN",
                 webview_height_ratio:"tall",
                 messenger_extensions: true
@@ -255,7 +255,7 @@ let getMainMenuTemplate = (senderID) => {
             buttons: [
               {
                 type: "web_url",
-                url: `${process.env.URL_WEB_VIEW_ORDER}?senderID=${senderID}`,
+                url: `${process.env.URL_WEB_VIEW_ORDER}/${senderID}`,
                 title: "DAT BAN",
                 webview_height_ratio:"tall",
                 messenger_extensions: true
@@ -631,7 +631,7 @@ let getButtonRoomsTemplate = (senderID) => {
         "buttons":[
           {
             "type": "web_url",
-            "url": `${process.env.URL_WEB_VIEW_ORDER}?senderID=${senderID}`,
+            "url": `${process.env.URL_WEB_VIEW_ORDER}/${senderID}`,
             "title": "DAT BAN",
             "webview_height_ratio":"tall",
             "messenger_extensions": true

@@ -11,7 +11,7 @@ let initWebRoutes = (app) => {
     router.post('/setup-persistent-menu',homeController.setupPersistentMenu)
     router.post('/webhook', homeController.postWebhook);
     router.get('/webhook', homeController.getWebhook);
-    router.get('/reserve-table', homeController.handleReserveTable);
+    router.get('/reserve-table/:senderId', homeController.handleReserveTable);
     router.post('/reserve-table-ajax',homeController.handlePostReserveTable);
     return app.use('/', router);
 }
