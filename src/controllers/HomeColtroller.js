@@ -270,10 +270,6 @@ let handleReserveTable = (req, res) => {
 
 let handlePostReserveTable = async (req, res) => {
   try {
-    // Kiểm tra và xử lý PSID
-    if (!req.body.psid || typeof req.body.psid !== 'string') {
-      return res.status(400).json({ message: 'PSID không hợp lệ.' });
-    }
 
     let customerName = "";
     if (req.body.customerName === "") {
