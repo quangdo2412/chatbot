@@ -3,6 +3,7 @@ import request from "request";
 import chatbotService from "../services/chatbotService";
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import moment from "moment";
+import { JWT } from 'google-auth-library';
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const SPEADSHEET_ID = process.env.SPEADSHEET_ID;
 const GOOGLE_SERVICE_ACCOUNT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
