@@ -3,7 +3,7 @@ import request from "request";
 require("dotenv").config();
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
-const IMAGE_GET_STARTED = "http://bit.ly/eric-bot1";
+const IMAGE_GET_STARTED = "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXFwMnBnMXVsamxramJpOGd6MXM0MjVra21ncXYxYTBtNDJiMnBpMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jKaFXbKyZFja0/giphy.webp";
 const IMAGE_MENU1 =
   "https://afamilycdn.com/fRhOWcbaG01Vd2ydvKbOwEYcba/Image/2015/11/bua-an-33-trieu-dong-khach-binh-than-rut-vi_20151116081951526.jpg";
 const IMAGE_MENU2 =
@@ -659,5 +659,5 @@ module.exports = {
   handleViewSaLad: handleViewSaLad,
   handeleShowDetailRooms: handeleShowDetailRooms,
   callSendAPI:callSendAPI,
-  getUserName,getUserName,
+  getUserName,getUserName
 };
