@@ -333,6 +333,13 @@ let handlePostReserveTable = async (req, res) => {
     };
     await chatbotService.callSendAPI(req.body.psid, response1);
 
+     // Gửi tin nhắn xác nhận cho khách hàng
+     let response2 = {
+      text: `Cam on ${customerName} da dat ban thanh cong . Duoi day la xac nhan thong tin dat ban cua ban
+        `,
+    };
+    await chatbotService.callSendAPI(req.body.psid, response2); 
+
     return res.status(200).json({
       message: "ok",
     });
