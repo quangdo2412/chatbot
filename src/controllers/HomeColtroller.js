@@ -324,21 +324,21 @@ let handlePostReserveTable = async (req, res) => {
     } else customerName = req.body.customerName;
 
     // Xử lý tin nhắn
-    let response1 = {
+    let response2 = {
       text: `---thong tin khach hang dat ban---
         \nHo va ten: ${customerName}
         \nEmail: ${req.body.email}
         \nSo dien thoai: ${req.body.phoneNumber}
         `,
     };
-    await chatbotService.callSendAPI(req.body.psid, response1);
+    await chatbotService.callSendAPI(req.body.psid, response2);
 
      // Gửi tin nhắn xác nhận cho khách hàng
-     let response2 = {
+     let response1 = {
       text: `Cam on ${customerName} da dat ban thanh cong . Duoi day la xac nhan thong tin dat ban cua ban
         `,
     };
-    await chatbotService.callSendAPI(req.body.psid, response2); 
+    await chatbotService.callSendAPI(req.body.psid, response1); 
 
     return res.status(200).json({
       message: "ok",
