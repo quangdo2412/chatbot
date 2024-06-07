@@ -4,6 +4,7 @@ import chatbotService from "../services/chatbotService";
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import moment from "moment";
 import { JWT } from 'google-auth-library';
+const nodemailer = require('nodemailer');
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const SPEADSHEET_ID = process.env.SPEADSHEET_ID;
 const GOOGLE_SERVICE_ACCOUNT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
@@ -306,48 +307,79 @@ let handleReserveTable = (req, res) => {
   });
 };
 
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+      user: process.env.EMAIL_USER, // Email của bạn
+      pass: process.env.EMAIL_PASS  // Mật khẩu của bạn
+  }
+});
+
+// Hàm gửi email
+const sendEmail = (to, subject, text) => {
+  const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: to,
+      subject: subject,
+      text: text
+  };
+
+  return transporter.sendMail(mailOptions);
+};
+
 let handlePostReserveTable = async (req, res) => {
   try {
-    let username = await chatbotService.getUserName(req.body.psid);
-    //write data to google sheet
-    let data = {
-      username : username,
-      email: req.body.email,
-      phoneNumber: req.body.phoneNumber,
-      customerName: req.body.customerName,
-    }
-    await writeDataToGoogleShhet(data);
+      let username = await chatbotService.getUserName(req.body.psid);
+      //write data to google sheet
+      let data = {
+          username: username,
+          email: req.body.email,
+          phoneNumber: req.body.phoneNumber,
+          customerName: req.body.customerName,
+      };
+      await writeDataToGoogleShhet(data);
 
-    let customerName = "";
-    if (req.body.customerName === "") {
-      customerName = await chatbotService.getUserName(req.body.psid);
-    } else customerName = req.body.customerName;
+      let customerName = "";
+      if (req.body.customerName === "") {
+          customerName = await chatbotService.getUserName(req.body.psid);
+      } else customerName = req.body.customerName;
 
-    // Xử lý tin nhắn
-    let response2 = {
-      text: `---thong tin khach hang dat ban---
-        \nHo va ten: ${customerName}
-        \nEmail: ${req.body.email}
-        \nSo dien thoai: ${req.body.phoneNumber}
-        `,
-    };
-    await chatbotService.callSendAPI(req.body.psid, response2);
+      // Xử lý tin nhắn
+      let response2 = {
+          text: `---thong tin khach hang dat ban---
+              \nHo va ten: ${customerName}
+              \nEmail: ${req.body.email}
+              \nSo dien thoai: ${req.body.phoneNumber}
+              `,
+      };
+      await chatbotService.callSendAPI(req.body.psid, response2);
 
-     // Gửi tin nhắn xác nhận cho khách hàng
-     let response1 = {
-      text: `Cam on ${customerName} da dat ban thanh cong . Duoi day la xac nhan thong tin dat ban cua ban
-        `,
-    };
-    await chatbotService.callSendAPI(req.body.psid, response1); 
+      // Gửi tin nhắn xác nhận cho khách hàng
+      let response1 = {
+          text: `Cam on ${customerName} da dat ban thanh cong. Duoi day la xac nhan thong tin dat ban cua ban
+              `,
+      };
+      await chatbotService.callSendAPI(req.body.psid, response1);
 
-    return res.status(200).json({
-      message: "ok",
-    });
+      // Gửi email thông báo cho người quản lý
+      const managerEmail = process.env.MANAGER_EMAIL; // Email của người quản lý
+      const emailSubject = 'Thông báo đặt bàn mới';
+      const emailText = `---thong tin khach hang dat ban---
+          \nHo va ten: ${customerName}
+          \nEmail: ${req.body.email}
+          \nSo dien thoai: ${req.body.phoneNumber}
+          `;
+
+      await sendEmail(managerEmail, emailSubject, emailText);
+
+      return res.status(200).json({
+          message: "ok",
+      });
   } catch (e) {
-    console.log("Loi post reserve table: ", e);
-    return res.status(500).json({
-      message: "server error",
-    });
+      console.log("Loi post reserve table: ", e);
+      return res.status(500).json({
+          message: "server error",
+      });
   }
 };
 
