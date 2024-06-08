@@ -347,16 +347,23 @@ let handlePostReserveTable = async (req, res) => {
             text: `Cảm ơn ${customerName} đã đặt bàn thành công. Dưới đây là xác nhận thông tin đặt bàn của bạn:`
         };
         await chatbotService.callSendAPI(req.body.psid, response1);
+        let response2 = {
+          text: `---Thông tin khách hàng đặt bàn---
+          \nHọ và tên: ${customerName}
+          \nEmail: ${req.body.email}
+          \nSố điện thoại: ${req.body.phoneNumber}`
+      };
+      await chatbotService.callSendAPI(req.body.psid, response2);
 
         // Gửi email thông báo cho người quản lý
-        const managerEmail = process.env.MANAGER_EMAIL; // Email của người quản lý
+        let customerEmail = req.body.email; // Email của khách hàng
         const emailSubject = 'Thông báo đặt bàn mới';
         const emailText = `---Thông tin khách hàng đặt bàn---
             \nHọ và tên: ${customerName}
             \nEmail: ${req.body.email}
             \nSố điện thoại: ${req.body.phoneNumber}`;
 
-        await sendEmail(managerEmail, emailSubject, emailText);
+        await sendEmail(customerEmail, emailSubject, emailText);
 
         return res.status(200).json({
             message: "ok",
