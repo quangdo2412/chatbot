@@ -10,7 +10,7 @@ const SPEADSHEET_ID = process.env.SPEADSHEET_ID;
 const GOOGLE_SERVICE_ACCOUNT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
 const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY;
 
-let writeDataToGoogleShhet = async (data) => {
+let writeDataToGoogleSheet = async (data) => {
   let currrentDate = new Date();
   const format = "HH:mm DD/MM/YYYY"
   let formatedDate = moment(currrentDate).format(format);
@@ -308,65 +308,65 @@ let handleReserveTable = (req, res) => {
 };
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-      user: process.env.EMAIL_USER, // Địa chỉ email để gửi email
-      pass: process.env.EMAIL_PASS  // Mật khẩu email hoặc mật khẩu ứng dụng
-  }
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL_USER, // Địa chỉ email để gửi email
+        pass: process.env.EMAIL_PASS  // Mật khẩu email hoặc mật khẩu ứng dụng
+    }
 });
 
 // Hàm gửi email
 const sendEmail = (to, subject, text) => {
-  const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: to,
-      subject: subject,
-      text: text
-  };
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: to,
+        subject: subject,
+        text: text
+    };
 
-  return transporter.sendMail(mailOptions);
+    return transporter.sendMail(mailOptions);
 };
 
 // Hàm xử lý đặt bàn
 let handlePostReserveTable = async (req, res) => {
-  try {
-      let username = await chatbotService.getUserName(req.body.psid);
-      // Ghi dữ liệu vào Google Sheet
-      let data = {
-          username: username,
-          email: req.body.email,
-          phoneNumber: req.body.phoneNumber,
-          customerName: req.body.customerName,
-      };
-      await writeDataToGoogleSheet(data);
+    try {
+        let username = await chatbotService.getUserName(req.body.psid);
+        // Ghi dữ liệu vào Google Sheet
+        let data = {
+            username: username,
+            email: req.body.email,
+            phoneNumber: req.body.phoneNumber,
+            customerName: req.body.customerName,
+        };
+        await writeDataToGoogleSheet(data);
 
-      let customerName = req.body.customerName || await chatbotService.getUserName(req.body.psid);
+        let customerName = req.body.customerName || await chatbotService.getUserName(req.body.psid);
 
-      // Gửi tin nhắn xác nhận cho khách hàng
-      let response1 = {
-          text: `Cảm ơn ${customerName} đã đặt bàn thành công. Dưới đây là xác nhận thông tin đặt bàn của bạn:`
-      };
-      await chatbotService.callSendAPI(req.body.psid, response1);
+        // Gửi tin nhắn xác nhận cho khách hàng
+        let response1 = {
+            text: `Cảm ơn ${customerName} đã đặt bàn thành công. Dưới đây là xác nhận thông tin đặt bàn của bạn:`
+        };
+        await chatbotService.callSendAPI(req.body.psid, response1);
 
-      // Gửi email thông báo cho người quản lý
-      const managerEmail = process.env.MANAGER_EMAIL; // Email của người quản lý
-      const emailSubject = 'Thông báo đặt bàn mới';
-      const emailText = `---Thông tin khách hàng đặt bàn---
-          \nHọ và tên: ${customerName}
-          \nEmail: ${req.body.email}
-          \nSố điện thoại: ${req.body.phoneNumber}`;
+        // Gửi email thông báo cho người quản lý
+        const managerEmail = process.env.MANAGER_EMAIL; // Email của người quản lý
+        const emailSubject = 'Thông báo đặt bàn mới';
+        const emailText = `---Thông tin khách hàng đặt bàn---
+            \nHọ và tên: ${customerName}
+            \nEmail: ${req.body.email}
+            \nSố điện thoại: ${req.body.phoneNumber}`;
 
-      await sendEmail(managerEmail, emailSubject, emailText);
+        await sendEmail(managerEmail, emailSubject, emailText);
 
-      return res.status(200).json({
-          message: "ok",
-      });
-  } catch (e) {
-      console.log("Lỗi post reserve table: ", e);
-      return res.status(500).json({
-          message: "server error",
-      });
-  }
+        return res.status(200).json({
+            message: "ok",
+        });
+    } catch (e) {
+        console.log("Lỗi post reserve table: ", e);
+        return res.status(500).json({
+            message: "server error",
+        });
+    }
 };
 
 module.exports = {
