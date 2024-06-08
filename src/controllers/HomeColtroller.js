@@ -359,7 +359,6 @@ let handlePostReserveTable = async (req, res) => {
       // Tạo nội dung HTML cho email
       let dataSend = {
           patienName: customerName,
-          phone: phoneNumber,
           time: new Date().toLocaleString(),
           redirectLink: `http://your-confirmation-link.com` // Có thể giữ nguyên nếu chỉ thử nghiệm
       };
@@ -389,7 +388,7 @@ let getBodyHTMLEmail = (dataSend) => {
   <p>Thông tin đặt bàn:</p>
   <div><b>Thời gian:</b> ${dataSend.time}</div>
   <div><b>Họ và tên:</b> ${dataSend.patienName}</div>
-  <div><b>Số điện thoại:</b> ${dataSend.phone}</div>
+  <div><b>Số điện thoại:</b> ${dataSend.phoneNumber}</div>
   <p>Vui lòng click vào đường link dưới đây để xác nhận thủ tục đặt bàn</p>
   <div><a href="${dataSend.redirectLink}" target="_blank">Click here</a></div>
   <div><b>Xin cảm ơn</b></div>`;
