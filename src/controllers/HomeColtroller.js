@@ -359,6 +359,7 @@ let handlePostReserveTable = async (req, res) => {
       // Tạo nội dung HTML cho email
       let dataSend = {
           patienName: customerName,
+          phoneNumber: req.body.phoneNumber, 
           time: new Date().toLocaleString(),
           redirectLink: `http://your-confirmation-link.com` // Có thể giữ nguyên nếu chỉ thử nghiệm
       };
