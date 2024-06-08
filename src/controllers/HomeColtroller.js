@@ -316,38 +316,39 @@ const transporter = nodemailer.createTransport({
 });
 
 // Hàm gửi email
-const sendEmail = (to, subject, text) => {
-    const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: to,
-        subject: subject,
-        text: text
-    };
+const sendEmail = (to, subject, htmlContent) => {
+  const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: to,
+      subject: subject,
+      html: htmlContent // Sử dụng thuộc tính html thay vì text
+  };
 
-    return transporter.sendMail(mailOptions);
+  return transporter.sendMail(mailOptions);
 };
 
 // Hàm xử lý đặt bàn
 let handlePostReserveTable = async (req, res) => {
-    try {
-        let username = await chatbotService.getUserName(req.body.psid);
-        // Ghi dữ liệu vào Google Sheet
-        let data = {
-            username: username,
-            email: req.body.email,
-            phoneNumber: req.body.phoneNumber,
-            customerName: req.body.customerName,
-        };
-        await writeDataToGoogleSheet(data);
+  try {
+      let username = await chatbotService.getUserName(req.body.psid);
+      // Ghi dữ liệu vào Google Sheet
+      let data = {
+          username: username,
+          email: req.body.email,
+          phoneNumber: req.body.phoneNumber,
+          customerName: req.body.customerName,
+      };
+      await writeDataToGoogleSheet(data);
 
-        let customerName = req.body.customerName || await chatbotService.getUserName(req.body.psid);
+      let customerName = req.body.customerName || await chatbotService.getUserName(req.body.psid);
 
-        // Gửi tin nhắn xác nhận cho khách hàng
-        let response1 = {
-            text: `Cảm ơn ${customerName} đã đặt bàn thành công. Dưới đây là xác nhận thông tin đặt bàn của bạn:`
-        };
-        await chatbotService.callSendAPI(req.body.psid, response1);
-        let response2 = {
+      // Gửi tin nhắn xác nhận cho khách hàng
+      let response1 = {
+          text: `Cảm ơn ${customerName} đã đặt bàn thành công. Dưới đây là xác nhận thông tin đặt bàn của bạn:`
+      };
+      await chatbotService.callSendAPI(req.body.psid, response1);
+
+      let response2 = {
           text: `---Thông tin khách hàng đặt bàn---
           \nHọ và tên: ${customerName}
           \nEmail: ${req.body.email}
@@ -355,26 +356,43 @@ let handlePostReserveTable = async (req, res) => {
       };
       await chatbotService.callSendAPI(req.body.psid, response2);
 
-        // Gửi email thông báo cho người quản lý
-        let customerEmail = req.body.email; // Email của khách hàng
-        const emailSubject = 'Thông báo đặt bàn mới';
-        const emailText = `---Thông tin khách hàng đặt bàn---
-            \nHọ và tên: ${customerName}
-            \nEmail: ${req.body.email}
-            \nSố điện thoại: ${req.body.phoneNumber}`;
+      // Tạo nội dung HTML cho email
+      let dataSend = {
+          patienName: customerName,
+          time: new Date().toLocaleString(),
+          redirectLink: `http://your-confirmation-link.com` // Có thể giữ nguyên nếu chỉ thử nghiệm
+      };
+      const emailHtml = getBodyHTMLEmail(dataSend);
 
-        await sendEmail(customerEmail, emailSubject, emailText);
+      // Gửi email thông báo cho người quản lý
+      let customerEmail = req.body.email; // Email của khách hàng
+      const emailSubject = 'Thông báo đặt bàn mới';
 
-        return res.status(200).json({
-            message: "ok",
-        });
-    } catch (e) {
-        console.log("Lỗi post reserve table: ", e);
-        return res.status(500).json({
-            message: "server error",
-        });
-    }
+      await sendEmail(customerEmail, emailSubject, emailHtml);
+
+      return res.status(200).json({
+          message: "ok",
+      });
+  } catch (e) {
+      console.log("Lỗi post reserve table: ", e);
+      return res.status(500).json({
+          message: "server error",
+      });
+  }
 };
+
+let getBodyHTMLEmail = (dataSend) => {
+  let result = `
+  <h3>Xin Chào ${dataSend.patienName}!</h3>
+  <p>Bạn nhận được email này vì đã đặt bàn online trên Vimaru Restaurant</p>
+  <p>Thông tin đặt bàn:</p>
+  <div><b>Thời gian: ${dataSend.time}</b></div>
+  <p>Vui lòng click vào đường link dưới đây để xác nhận thủ tục đặt bàn</p>
+  <div><a href="${dataSend.redirectLink}" target="_blank">Click here</a></div>
+  <div><b>Xin cảm ơn</b></div>`;
+  return result;
+}
+
 
 module.exports = {
   getHomePage: getHomePage,
