@@ -310,8 +310,8 @@ let handleReserveTable = (req, res) => {
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-      user: process.env.EMAIL_USER, // Email của bạn
-      pass: process.env.EMAIL_PASS  // Mật khẩu của bạn
+      user: process.env.EMAIL_USER, // Địa chỉ email để gửi email
+      pass: process.env.EMAIL_PASS  // Mật khẩu email hoặc mật khẩu ứng dụng
   }
 });
 
@@ -327,48 +327,34 @@ const sendEmail = (to, subject, text) => {
   return transporter.sendMail(mailOptions);
 };
 
+// Hàm xử lý đặt bàn
 let handlePostReserveTable = async (req, res) => {
   try {
       let username = await chatbotService.getUserName(req.body.psid);
-      //write data to google sheet
+      // Ghi dữ liệu vào Google Sheet
       let data = {
           username: username,
           email: req.body.email,
           phoneNumber: req.body.phoneNumber,
           customerName: req.body.customerName,
       };
-      await writeDataToGoogleShhet(data);
+      await writeDataToGoogleSheet(data);
 
-      let customerName = "";
-      if (req.body.customerName === "") {
-          customerName = await chatbotService.getUserName(req.body.psid);
-      } else customerName = req.body.customerName;
-
-      // Xử lý tin nhắn
-      let response2 = {
-          text: `---thong tin khach hang dat ban---
-              \nHo va ten: ${customerName}
-              \nEmail: ${req.body.email}
-              \nSo dien thoai: ${req.body.phoneNumber}
-              `,
-      };
-      await chatbotService.callSendAPI(req.body.psid, response2);
+      let customerName = req.body.customerName || await chatbotService.getUserName(req.body.psid);
 
       // Gửi tin nhắn xác nhận cho khách hàng
       let response1 = {
-          text: `Cam on ${customerName} da dat ban thanh cong. Duoi day la xac nhan thong tin dat ban cua ban
-              `,
+          text: `Cảm ơn ${customerName} đã đặt bàn thành công. Dưới đây là xác nhận thông tin đặt bàn của bạn:`
       };
       await chatbotService.callSendAPI(req.body.psid, response1);
 
       // Gửi email thông báo cho người quản lý
       const managerEmail = process.env.MANAGER_EMAIL; // Email của người quản lý
       const emailSubject = 'Thông báo đặt bàn mới';
-      const emailText = `---thong tin khach hang dat ban---
-          \nHo va ten: ${customerName}
+      const emailText = `---Thông tin khách hàng đặt bàn---
+          \nHọ và tên: ${customerName}
           \nEmail: ${req.body.email}
-          \nSo dien thoai: ${req.body.phoneNumber}
-          `;
+          \nSố điện thoại: ${req.body.phoneNumber}`;
 
       await sendEmail(managerEmail, emailSubject, emailText);
 
@@ -376,7 +362,7 @@ let handlePostReserveTable = async (req, res) => {
           message: "ok",
       });
   } catch (e) {
-      console.log("Loi post reserve table: ", e);
+      console.log("Lỗi post reserve table: ", e);
       return res.status(500).json({
           message: "server error",
       });
