@@ -4,6 +4,7 @@ import chatbotService from "../services/chatbotService";
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import moment from "moment";
 import { JWT } from 'google-auth-library';
+import emailService from "../services/emailService";
 const nodemailer = require('nodemailer');
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const SPEADSHEET_ID = process.env.SPEADSHEET_ID;
@@ -307,25 +308,25 @@ let handleReserveTable = (req, res) => {
   });
 };
 
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.EMAIL_USER, // Địa chỉ email để gửi email
-        pass: process.env.EMAIL_PASS  // Mật khẩu email hoặc mật khẩu ứng dụng
-    }
-});
+// const transporter = nodemailer.createTransport({
+//     service: 'gmail',
+//     auth: {
+//         user: process.env.EMAIL_USER, // Địa chỉ email để gửi email
+//         pass: process.env.EMAIL_PASS  // Mật khẩu email hoặc mật khẩu ứng dụng
+//     }
+// });
 
-// Hàm gửi email
-const sendEmail = (to, subject, htmlContent) => {
-  const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: to,
-      subject: subject,
-      html: htmlContent // Sử dụng thuộc tính html thay vì text
-  };
+// // Hàm gửi email
+// const sendEmail = (to, subject, htmlContent) => {
+//   const mailOptions = {
+//       from: process.env.EMAIL_USER,
+//       to: to,
+//       subject: subject,
+//       html: htmlContent // Sử dụng thuộc tính html thay vì text
+//   };
 
-  return transporter.sendMail(mailOptions);
-};
+//   return transporter.sendMail(mailOptions);
+// };
 
 // Hàm xử lý đặt bàn
 let handlePostReserveTable = async (req, res) => {
@@ -363,13 +364,13 @@ let handlePostReserveTable = async (req, res) => {
           time: new Date().toLocaleString(),
           redirectLink: `http://your-confirmation-link.com` // Có thể giữ nguyên nếu chỉ thử nghiệm
       };
-      const emailHtml = getBodyHTMLEmail(dataSend);
+      const emailHtml = emailService.getBodyHTMLEmail(dataSend);
 
       // Gửi email thông báo cho người quản lý
       let customerEmail = req.body.email; // Email của khách hàng
       const emailSubject = 'Thông báo đặt bàn mới';
 
-      await sendEmail(customerEmail, emailSubject, emailHtml);
+      await emailService.sendEmail(customerEmail, emailSubject, emailHtml);
 
       return res.status(200).json({
           message: "ok",
@@ -382,19 +383,19 @@ let handlePostReserveTable = async (req, res) => {
   }
 };
 
-let getBodyHTMLEmail = (dataSend) => {
-  let result = `
-  <h3>Xin Chào ${dataSend.patienName}!</h3>
-  <p>Bạn nhận được email này vì đã đặt bàn online trên Quang restaurent</p>
-  <p>Thông tin đặt bàn:</p>
-  <div><b>Thời gian:</b> ${dataSend.time}</div>
-  <div><b>Họ và tên:</b> ${dataSend.patienName}</div>
-  <div><b>Số điện thoại:</b> ${dataSend.phoneNumber}</div>
-  <p>Vui lòng click vào đường link dưới đây để xác nhận thủ tục đặt bàn</p>
-  <div><a href="${dataSend.redirectLink}" target="_blank">Click here</a></div>
-  <div><b>Xin cảm ơn</b></div>`;
-  return result;
-}
+// let getBodyHTMLEmail = (dataSend) => {
+//   let result = `
+//   <h3>Xin Chào ${dataSend.patienName}!</h3>
+//   <p>Bạn nhận được email này vì đã đặt bàn online trên Quang restaurent</p>
+//   <p>Thông tin đặt bàn:</p>
+//   <div><b>Thời gian:</b> ${dataSend.time}</div>
+//   <div><b>Họ và tên:</b> ${dataSend.patienName}</div>
+//   <div><b>Số điện thoại:</b> ${dataSend.phoneNumber}</div>
+//   <p>Vui lòng click vào đường link dưới đây để xác nhận thủ tục đặt bàn</p>
+//   <div><a href="${dataSend.redirectLink}" target="_blank">Click here</a></div>
+//   <div><b>Xin cảm ơn</b></div>`;
+//   return result;
+// }
 
 
 module.exports = {
